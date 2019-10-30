@@ -4,12 +4,13 @@ import styles from './App.module.css';
 
 const App = (props) => {
   const {
-		setNets,
+    setNets,
+    addNetId,
 		nets,
-    add,
-    addNum,
-    counter
-	} = props;
+    loadNetId,
+  } = props;
+  
+  console.log(loadNetId);
 
   // при запуске получаем сети и записываем в Store
   // пока не сделали это, нужно крутить лоадер!
@@ -21,19 +22,27 @@ const App = (props) => {
 	}, [setNets]);
 	
 	const loadBikes = (id, index) => {
-		console.log(id, index);
+    console.log(id, index);
+    if (loadNetId.includes(id)) {
+      console.log('уже смотрели');
+    } else {
+      console.log('надо загружать!');
+      addNetId(id);
+      axios.get(`http://api.citybik.es/v2/networks/${id}`)
+        .then(res => {
+          console.log(res.data);
+      });      
+    }
 	}
 
   return (
     <div className={styles.App}>
-      <div className="main">
-        <h1>Велосипеды. Перезагрузка</h1>
-        <h2>Управляем числом: {counter}</h2>
-
+      <div className={styles.main}>
+        <h1>Велосипеды 2</h1>
         <hr/>
 
-        <div className="row">
-          <div className="col">
+        <div className={styles.row}>
+          <div className={styles.col}>
 						{
 							nets.map((net, index) => (
 								<div
@@ -45,15 +54,11 @@ const App = (props) => {
 							))
 						}
           </div>
-          <div className="col">
+          <div className={styles.col}>
 
           </div>
         </div>
-
-        <div className="Actions">
-          <button onClick={add}>Добавить 1</button>
-          <button onClick={() => {addNum(10)}}>Добавить 10</button>
-        </div>        
+      
       </div>
     </div>
   )

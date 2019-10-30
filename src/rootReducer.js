@@ -1,5 +1,5 @@
 //import { combineReducers } from "redux";
-import {ADD, ADD_NUM, SET_NETS} from './actions/actionTypes';
+import {ADD, ADD_NUM, SET_NETS, ADD_NET_ID} from './actions/actionTypes';
 
 // при объединении
 // import {combineReducers} from 'redux';
@@ -15,6 +15,7 @@ const initialState = {
     counter: 100,
     nets: [],
     stations: {},
+    loadNetId: [],
 }
 
 export default function rootReducer(state = initialState, action) {
@@ -28,6 +29,11 @@ export default function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 counter: state.counter + 1
+            }
+        case ADD_NET_ID:
+            return {
+                ...state,
+                loadNetId: [...state.loadNetId, action.payload]
             }
         case ADD_NUM:
             return {
