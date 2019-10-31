@@ -1,5 +1,5 @@
 //import { combineReducers } from "redux";
-import {SET_NETS, ADD_NET, GET_NET} from './actions/actionTypes';
+import {SET_NETS, ADD_NET, GET_NET, CHANGE_STAT} from './actions/actionTypes';
 
 // при объединении
 // import {combineReducers} from 'redux';
@@ -41,6 +41,22 @@ export default function rootReducer(state = initialState, action) {
                 ...state,
                 currentNetId: action.payload,
             }
+        case CHANGE_STAT:
+            const newStations = [...state.stations[state.currentNetId].stations];
+            newStations[action.payload.index] = {
+                ...newStations[action.payload.index],
+                like: !newStations[action.payload.index].like
+            }
+            return {
+                ...state,
+                stations: {
+                    ...state.stations,
+                    [state.currentNetId]: {
+                        ...state.stations[state.currentNetId],
+                        stations: newStations,
+                    }
+                }                
+            }        
         default:
             return state;
     }

@@ -1,6 +1,6 @@
 import App from '../App';
 import {connect} from 'react-redux';
-import {setNets, addNet, getNet} from '../actions/actions';
+import {setNets, addNet, getNet, changeStat} from '../actions/actions';
 
 // переносим State (или его часть) в props компонента
 const mapStateToProps = state => ({
@@ -14,7 +14,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   setNets,
   addNet,
-  getNet
+  getNet,
+  changeStat
 }
 
 // связываем компонент с Redux Store

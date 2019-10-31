@@ -9,11 +9,10 @@ const App = (props) => {
     loadNetId,
     addNet,
     getNet,
+    changeStat,
     stations,
     currentNetId,
   } = props;
-  
-  //console.log(loadNetId);
 
   // при запуске получаем сети и записываем в Store
   // пока не сделали это, нужно крутить лоадер!
@@ -24,21 +23,26 @@ const App = (props) => {
     });
 	}, [setNets]);
 	
-	const loadBikes = (id, index) => {
+	const netClickHandler = (id, index) => {
     console.log(id, index);
     if (loadNetId.includes(id)) {
-      console.log('уже смотрели');
+      // сеть уже смотрели - получаем из Store
       getNet(id);
     } else {
-      console.log('надо загружать!');
+      // новая сеть - делаем запрос и сохраняем
       axios.get(`http://api.citybik.es/v2/networks/${id}`)
         .then(res => {
           const netNew = res.data.network;
-          //console.log(netNew);
           addNet(id, netNew);
       });
     }
-	}
+  }
+  
+  // внимание! ID - это id станции, а не сети!!!
+	const stationClickHandler = (id, index) => {
+    console.log(id, index);
+    changeStat(id, index);
+  }
 
   return (
     <div className={styles.App}>
@@ -51,8 +55,9 @@ const App = (props) => {
 						{
 							nets.map((net, index) => (
 								<div
+                  className={styles.card}
 									key={`${net.id}_${index}`}
-									onClick={() => loadBikes(net.id, index)}
+									onClick={() => netClickHandler(net.id, index)}
 								>
 									{net.id}
 								</div>
@@ -69,13 +74,21 @@ const App = (props) => {
 
             { // в сети есть станции
               (currentNetId !== undefined && stations !== undefined && stations[currentNetId].stations.length > 0)
-                ? stations[currentNetId].stations.map((station, index) => (
+                ? stations[currentNetId].stations.map((station, index) => {
+                  console.log(station.id, station.like);
+                  // создаём массив классов
+                  const cardClasses = [styles.card];
+                  // добавляем класс если есть свойство
+                  if (station.like) {cardClasses.push(styles.cardLike);}
+                  return (                    
                     <div
+                      className={cardClasses.join(' ')}
                       key={`${station.id}_${index}`}
+                      onClick={() => stationClickHandler(station.id, index)}
                     >
-                      {station.id}
+                      {station.name}, доступно велосипедов: {station.free_bikes}
                     </div>
-                  ))
+                  )})
                 : null
             }
           </div>
