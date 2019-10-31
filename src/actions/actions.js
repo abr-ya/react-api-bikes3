@@ -1,20 +1,19 @@
-import {SET_NETS, ADD, ADD_NUM, ADD_NET_ID} from './actionTypes';
+import {SET_NETS, ADD_NET, GET_NET} from './actionTypes';
 
 export const setNets = netsList => ({
     type: SET_NETS,
     payload: netsList,
 });
 
-export const add = () => ({
-    type: ADD
+export const addNet = (id,stations) => ({
+    type: ADD_NET,
+    payload: {
+        id,
+        stations,
+    },
 });
 
-export const addNum = number => ({
-    type: ADD_NUM,
-    payload: number,
-});
-
-export const addNetId = id => ({
-    type: ADD_NET_ID,
+export const getNet = (id) => ({
+    type: GET_NET,
     payload: id,
 });

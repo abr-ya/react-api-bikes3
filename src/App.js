@@ -5,12 +5,15 @@ import styles from './App.module.css';
 const App = (props) => {
   const {
     setNets,
-    addNetId,
 		nets,
     loadNetId,
+    addNet,
+    getNet,
+    stations,
+    currentNetId,
   } = props;
   
-  console.log(loadNetId);
+  //console.log(loadNetId);
 
   // при запуске получаем сети и записываем в Store
   // пока не сделали это, нужно крутить лоадер!
@@ -25,13 +28,15 @@ const App = (props) => {
     console.log(id, index);
     if (loadNetId.includes(id)) {
       console.log('уже смотрели');
+      getNet(id);
     } else {
       console.log('надо загружать!');
-      addNetId(id);
       axios.get(`http://api.citybik.es/v2/networks/${id}`)
         .then(res => {
-          console.log(res.data);
-      });      
+          const netNew = res.data.network;
+          //console.log(netNew);
+          addNet(id, netNew);
+      });
     }
 	}
 
@@ -55,7 +60,24 @@ const App = (props) => {
 						}
           </div>
           <div className={styles.col}>
+            { // сеть выбрана и станции загружены
+              (currentNetId !== undefined && stations !== undefined)
+                ? `Выбрана сеть ${currentNetId} компании ${stations[currentNetId].company[0]}.
+                   Кол-во станций в сети: ${stations[currentNetId].stations.length}.`
+                : "Необходимо выбрать сеть!"
+            }
 
+            { // в сети есть станции
+              (currentNetId !== undefined && stations !== undefined && stations[currentNetId].stations.length > 0)
+                ? stations[currentNetId].stations.map((station, index) => (
+                    <div
+                      key={`${station.id}_${index}`}
+                    >
+                      {station.id}
+                    </div>
+                  ))
+                : null
+            }
           </div>
         </div>
       

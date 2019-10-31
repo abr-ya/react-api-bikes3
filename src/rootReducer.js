@@ -1,13 +1,13 @@
 //import { combineReducers } from "redux";
-import {ADD, ADD_NUM, SET_NETS, ADD_NET_ID} from './actions/actionTypes';
+import {SET_NETS, ADD_NET, GET_NET} from './actions/actionTypes';
 
 // при объединении
 // import {combineReducers} from 'redux';
-// import counter1 from 'path-to-file';
-// import counter2 from 'path-to-file';
+// import reducer1 from 'path-to-file';
+// import reducer2 from 'path-to-file';
 
 // export default combineReducers({
-//     counter1, counter2
+//     reducer1, reducer2
 // })
 
 
@@ -16,6 +16,7 @@ const initialState = {
     nets: [],
     stations: {},
     loadNetId: [],
+    currentNetId: undefined,
 }
 
 export default function rootReducer(state = initialState, action) {
@@ -25,20 +26,20 @@ export default function rootReducer(state = initialState, action) {
                 ...state,
                 nets: action.payload,
             }
-        case ADD:
+        case ADD_NET:
             return {
                 ...state,
-                counter: state.counter + 1
+                currentNetId: action.payload.id,
+                loadNetId: [...state.loadNetId, action.payload.id],
+                stations: {
+                    ...state.stations,
+                    [action.payload.id]: action.payload.stations,
+                }
             }
-        case ADD_NET_ID:
+        case GET_NET:
             return {
                 ...state,
-                loadNetId: [...state.loadNetId, action.payload]
-            }
-        case ADD_NUM:
-            return {
-                ...state,
-                counter: state.counter + 10
+                currentNetId: action.payload,
             }
         default:
             return state;

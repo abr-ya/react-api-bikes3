@@ -1,20 +1,20 @@
 import App from '../App';
 import {connect} from 'react-redux';
-import {setNets, add, addNum, addNetId} from '../actions/actions';
+import {setNets, addNet, getNet} from '../actions/actions';
 
 // переносим State (или его часть) в props компонента
 const mapStateToProps = state => ({
-  counter: state.counter,
   nets: state.nets,
+  stations: state.stations,
   loadNetId: state.loadNetId,
+  currentNetId: state.currentNetId,
 })
   
 // добавляем функции - создатели экшенов в props компонента
 const mapDispatchToProps = {
   setNets,
-  add,
-  addNum,
-  addNetId,
+  addNet,
+  getNet
 }
 
 // связываем компонент с Redux Store
