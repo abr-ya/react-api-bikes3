@@ -44,8 +44,19 @@ body {
 .card {
   cursor: pointer;
   margin-bottom: 3px;
+  padding: 0 5px;
 }
 
 .cardLike {
-  background-color: bisque;
+  padding-left: 25px;
+  position: relative;
+}
+
+.cardLike:before {
+  content: '\2665';
+  position: absolute;
+  left: 5px;
+  top: -8px;
+  font-size: 18pt;
+  color: brown;
 }

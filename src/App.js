@@ -59,25 +59,25 @@ const App = (props) => {
 									key={`${net.id}_${index}`}
 									onClick={() => netClickHandler(net.id, index)}
 								>
-									{net.id}
+									{net.name} ({net.id})
 								</div>
 							))
 						}
           </div>
           <div className={styles.col}>
             <h3>
-            { // сеть выбрана и станции загружены
-              (stations[currentNetId])
-                ? `Станции сети ${currentNetId} (${stations[currentNetId].length}):`
-                : "Необходимо выбрать сеть!"
-            }
+              { // сеть выбрана и станции загружены
+                (stations[currentNetId])
+                  ? `Станции сети ${currentNetId} (${stations[currentNetId].length}):`
+                  : "Необходимо выбрать сеть!"
+              }
             </h3>
 
             { // в сети есть станции
               (stations[currentNetId])
                 ? stations[currentNetId].map((station, index) => {
                   // станция: лайк или нет ?
-                  console.log(station.id, station.liked);
+                  //console.log(station.id, station.liked);
 
                   return (
                     <div
