@@ -1,4 +1,4 @@
-import {SET_NETS, ADD_NET, GET_NET, CHANGE_STAT} from './actionTypes';
+import {SET_NETS, ADD_NET, SELECT_NET, CHANGE_STATION} from './actionTypes';
 
 export const setNets = netsList => ({
     type: SET_NETS,
@@ -13,15 +13,14 @@ export const addNet = (id,stations) => ({
     },
 });
 
-export const getNet = (id) => ({
-    type: GET_NET,
+export const selectNet = (id) => ({
+    type: SELECT_NET,
     payload: id,
 });
 
-export const changeStat = (id, index) => ({
-    type: CHANGE_STAT,
+export const changeStat = (index) => ({
+    type: CHANGE_STATION,
     payload: {
-        id,
         index,
     },
 });

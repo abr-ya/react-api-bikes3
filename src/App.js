@@ -1,23 +1,24 @@
 import React, {useEffect} from 'react';
+import cn from 'classnames';
 import axios from 'axios';
+
 import styles from './App.module.css';
 
 const App = (props) => {
   const {
-    setNets,
-		nets,
-    loadNetId,
-    addNet,
-    getNet,
-    changeStat,
+    nets,
     stations,
-    currentNetId,
+    currentNetId,    
+    setNets,
+		addNet,
+    selectNet,
+    changeStat,
   } = props;
 
   // при запуске получаем сети и записываем в Store
   // пока не сделали это, нужно крутить лоадер!
   useEffect(() => {
-    axios.get(`http://api.citybik.es/v2/networks?fields=id,company`)
+    axios.get(`http://api.citybik.es/v2/networks`)
       .then(res => {
         setNets(res.data.networks);
     });
@@ -25,23 +26,21 @@ const App = (props) => {
 	
 	const netClickHandler = (id, index) => {
     console.log(id, index);
-    if (loadNetId.includes(id)) {
+    // здесь, скорее всего, надо проверять не currentNetId, ведь он не менялся ещё !..
+    if (stations[id]) {
       // сеть уже смотрели - получаем из Store
-      getNet(id);
+      selectNet(id);
     } else {
       // новая сеть - делаем запрос и сохраняем
       axios.get(`http://api.citybik.es/v2/networks/${id}`)
         .then(res => {
-          const netNew = res.data.network;
-          addNet(id, netNew);
+          addNet(id, res.data.network.stations);
       });
     }
   }
   
-  // внимание! ID - это id станции, а не сети!!!
-	const stationClickHandler = (id, index) => {
-    console.log(id, index);
-    changeStat(id, index);
+	const stationClickHandler = (index) => {
+    changeStat(index);
   }
 
   return (
@@ -52,6 +51,7 @@ const App = (props) => {
 
         <div className={styles.row}>
           <div className={styles.col}>
+            <h3>Список сетей</h3>
 						{
 							nets.map((net, index) => (
 								<div
@@ -65,26 +65,27 @@ const App = (props) => {
 						}
           </div>
           <div className={styles.col}>
+            <h3>
             { // сеть выбрана и станции загружены
-              (currentNetId !== undefined && stations !== undefined)
-                ? `Выбрана сеть ${currentNetId} компании ${stations[currentNetId].company[0]}.
-                   Кол-во станций в сети: ${stations[currentNetId].stations.length}.`
+              (stations[currentNetId])
+                ? `Станции сети ${currentNetId} (${stations[currentNetId].length}):`
                 : "Необходимо выбрать сеть!"
             }
+            </h3>
 
             { // в сети есть станции
-              (currentNetId !== undefined && stations !== undefined && stations[currentNetId].stations.length > 0)
-                ? stations[currentNetId].stations.map((station, index) => {
-                  console.log(station.id, station.like);
-                  // создаём массив классов
-                  const cardClasses = [styles.card];
-                  // добавляем класс если есть свойство
-                  if (station.like) {cardClasses.push(styles.cardLike);}
-                  return (                    
+              (stations[currentNetId])
+                ? stations[currentNetId].map((station, index) => {
+                  // станция: лайк или нет ?
+                  console.log(station.id, station.liked);
+
+                  return (
                     <div
-                      className={cardClasses.join(' ')}
+                      className={cn(styles.card, {
+                        [styles.cardLike]: station.liked,
+                      })}
                       key={`${station.id}_${index}`}
-                      onClick={() => stationClickHandler(station.id, index)}
+                      onClick={() => stationClickHandler(index)}
                     >
                       {station.name}, доступно велосипедов: {station.free_bikes}
                     </div>

@@ -1,5 +1,5 @@
 //import { combineReducers } from "redux";
-import {SET_NETS, ADD_NET, GET_NET, CHANGE_STAT} from './actions/actionTypes';
+import {SET_NETS, ADD_NET, SELECT_NET, CHANGE_STATION} from './actions/actionTypes';
 
 // при объединении
 // import {combineReducers} from 'redux';
@@ -12,10 +12,8 @@ import {SET_NETS, ADD_NET, GET_NET, CHANGE_STAT} from './actions/actionTypes';
 
 
 const initialState = {
-    counter: 100,
     nets: [],
     stations: {},
-    loadNetId: [],
     currentNetId: undefined,
 }
 
@@ -30,33 +28,29 @@ export default function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 currentNetId: action.payload.id,
-                loadNetId: [...state.loadNetId, action.payload.id],
                 stations: {
                     ...state.stations,
                     [action.payload.id]: action.payload.stations,
                 }
             }
-        case GET_NET:
+        case SELECT_NET:
             return {
                 ...state,
                 currentNetId: action.payload,
             }
-        case CHANGE_STAT:
-            const newStations = [...state.stations[state.currentNetId].stations];
-            newStations[action.payload.index] = {
-                ...newStations[action.payload.index],
-                like: !newStations[action.payload.index].like
+        case CHANGE_STATION:
+            const newNetStations = [...state.stations[state.currentNetId]];
+            newNetStations[action.payload.index] = {
+                ...newNetStations[action.payload.index],
+                liked: !newNetStations[action.payload.index].liked
             }
             return {
                 ...state,
                 stations: {
                     ...state.stations,
-                    [state.currentNetId]: {
-                        ...state.stations[state.currentNetId],
-                        stations: newStations,
-                    }
-                }                
-            }        
+                    [state.currentNetId]: newNetStations,
+                }      
+            }
         default:
             return state;
     }
