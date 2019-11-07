@@ -20,7 +20,5 @@ export const selectNet = (id) => ({
 
 export const changeStat = (index) => ({
     type: CHANGE_STATION,
-    payload: {
-        index,
-    },
+    index,
 });

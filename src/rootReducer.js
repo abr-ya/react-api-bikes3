@@ -39,18 +39,11 @@ export default function rootReducer(state = initialState, action) {
                 currentNetId: action.payload,
             }
         case CHANGE_STATION:
-            const newNetStations = [...state.stations[state.currentNetId]];
-            newNetStations[action.payload.index] = {
-                ...newNetStations[action.payload.index],
-                liked: !newNetStations[action.payload.index].liked
-            }
-            return {
-                ...state,
-                stations: {
-                    ...state.stations,
-                    [state.currentNetId]: newNetStations,
-                }      
-            }
+            const changedStation = state.stations[state.currentNetId][action.index];
+            changedStation.liked = !changedStation.liked;
+            const stations = {...state.stations};
+            stations[state.currentNetId][action.index] = changedStation;
+            return {...state, stations}
         default:
             return state;
     }
