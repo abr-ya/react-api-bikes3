@@ -9,24 +9,29 @@ const App = (props) => {
     nets,
     stations,
     currentNetId,    
-    setNets,
+    // setNets,
 		addNet,
     selectNet,
     changeStat,
+    initApp,
   } = props;
 
   // при запуске получаем сети и записываем в Store
   // пока не сделали это, нужно крутить лоадер!
+  // useEffect(() => {
+  //   axios.get(`http://api.citybik.es/v2/networks`)
+  //     .then(res => {
+  //       setNets(res.data.networks);
+  //   });
+  // }, [setNets]);
+  
   useEffect(() => {
-    axios.get(`http://api.citybik.es/v2/networks`)
-      .then(res => {
-        setNets(res.data.networks);
-    });
-	}, [setNets]);
+    initApp();
+  }, [initApp]);
 	
 	const netClickHandler = (id, index) => {
     console.log(id, index);
-    // здесь, скорее всего, надо проверять не currentNetId, ведь он не менялся ещё !..
+    // знаем ли сеть?
     if (stations[id]) {
       // сеть уже смотрели - получаем из Store
       selectNet(id);
@@ -46,7 +51,7 @@ const App = (props) => {
   return (
     <div className={styles.App}>
       <div className={styles.main}>
-        <h1>Велосипеды 2</h1>
+        <h1>Велосипеды 3</h1>
         <hr/>
 
         <div className={styles.row}>
