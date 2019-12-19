@@ -16,6 +16,7 @@ const mapDispatchToProps = {
   selectNet: actions.selectNet,
   changeStat: actions.changeStat,
   initApp: actions.initApp,
+  displayNet: actions.displayNet,
 }
 
 // связываем компонент с Redux Store

@@ -1,12 +1,13 @@
-import {call, put} from 'redux-saga/effects';
+import {call, put, select} from 'redux-saga/effects';
 import * as actions from './actions/actions';
 import * as api from './api';
+import * as selectors from './selectors';
 
-// это была какая-то пробная сага!
-export function* setNetSaga() {
-    // const response = yield call(requestNetes, 'setNetSaga');
-    // yield put(setNetes(response.data.data));
-    yield call(console.log, 'set NETES');
+// это будет сага отображения сети
+export function* displayNetSaga(action) {
+    yield call(console.log, action);
+    const selectedStations = yield select(selectors.getStations);
+    console.log(selectedStations[action.payload]);
 }
 
 export function* initAppSaga() {

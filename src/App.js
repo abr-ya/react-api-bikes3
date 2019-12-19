@@ -14,23 +14,18 @@ const App = (props) => {
     selectNet,
     changeStat,
     initApp,
+    displayNet,
   } = props;
 
-  // при запуске получаем сети и записываем в Store
-  // пока не сделали это, нужно крутить лоадер!
-  // useEffect(() => {
-  //   axios.get(`http://api.citybik.es/v2/networks`)
-  //     .then(res => {
-  //       setNets(res.data.networks);
-  //   });
-  // }, [setNets]);
-  
+  // инициализация - нужно добавить лоадер!
   useEffect(() => {
     initApp();
   }, [initApp]);
-	
-	const netClickHandler = (id, index) => {
-    console.log(id, index);
+  
+  // здесь дублирование пока - идёт перенос в сагу
+	const netClickHandler = (id) => {
+    console.log(id);
+    displayNet(id);
     // знаем ли сеть?
     if (stations[id]) {
       // сеть уже смотрели - получаем из Store

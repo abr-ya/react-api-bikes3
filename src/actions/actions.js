@@ -23,6 +23,13 @@ export const changeStat = (index) => ({
     index,
 });
 
+
+// sagas actions
 export const initApp = () => ({
     type: actionTypes.INIT_APP,
+});
+
+export const displayNet = (id) => ({
+    type: actionTypes.DISPLAY_NET,
+    payload: id,
 });
