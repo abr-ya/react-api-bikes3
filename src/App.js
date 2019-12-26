@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import styles from './App.module.css';
 import NetStations from './components/NetStations/NetStations';
+import Nets from './components/Nets/Nets';
 
 const App = (props) => {
   const {
@@ -13,7 +14,6 @@ const App = (props) => {
     displayNet,
   } = props;
 
-  // инициализация - нужно добавить лоадер!
   const [initislized, setInitialized] = useState(false);
   if (!initislized) {
     initApp();
@@ -34,18 +34,7 @@ const App = (props) => {
 
         <div className={styles.row}>
           <div className={styles.col}>
-            <h3>Список сетей</h3>
-						{
-							nets.map((net, index) => (
-								<div
-                  className={styles.card}
-									key={`${net.id}_${index}`}
-									onClick={() => selectNet(net.id)}
-								>
-									{net.name} ({net.id})
-								</div>
-							))
-						}
+            <Nets nets={nets} selectNet={selectNet} />
           </div>
           <div className={styles.col}>
             <NetStations currentNetStations={currentNetStations} changeStat={changeStat} />
