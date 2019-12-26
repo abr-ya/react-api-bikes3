@@ -1,12 +1,13 @@
 import * as actionTypes from './actionTypes';
 
+// reducers actions
 export const setNets = netsList => ({
     type: actionTypes.SET_NETS,
     payload: netsList,
 });
 
-export const addNet = (id,stations) => ({
-    type: actionTypes.ADD_NET,
+export const setNetStations = (id,stations) => ({
+    type: actionTypes.SET_NET_STATIONS,
     payload: {
         id,
         stations,
@@ -29,7 +30,8 @@ export const initApp = () => ({
     type: actionTypes.INIT_APP,
 });
 
-export const displayNet = (id) => ({
+export const displayNet = (id, stations) => ({
     type: actionTypes.DISPLAY_NET,
-    payload: id,
+    id,
+    stations,
 });

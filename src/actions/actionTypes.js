@@ -1,5 +1,5 @@
 export const SET_NETS = 'SET_NETS';
-export const ADD_NET = 'ADD_NET';
+export const SET_NET_STATIONS = 'SET_NET_STATIONS';
 export const SELECT_NET = 'SELECT_NET';
 export const CHANGE_STATION = 'CHANGE_STATION';
 

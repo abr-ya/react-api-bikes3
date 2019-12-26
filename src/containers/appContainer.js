@@ -1,18 +1,18 @@
 import App from '../App';
 import {connect} from 'react-redux';
 import * as actions from '../actions/actions';
+import * as selectors from '../selectors';
 
 // переносим State (или его часть) в props компонента
 const mapStateToProps = state => ({
   nets: state.nets,
   stations: state.stations,
   currentNetId: state.currentNetId,
+  currentNetStations: selectors.getСurrentNetStations(state),
 })
-  
-// добавляем функции - создатели экшенов в props компонента
+
+// добавляем функции actions в props компонента
 const mapDispatchToProps = {
-  setNets: actions.setNets,
-  addNet: actions.addNet,
   selectNet: actions.selectNet,
   changeStat: actions.changeStat,
   initApp: actions.initApp,
