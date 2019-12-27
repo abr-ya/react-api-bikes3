@@ -3,7 +3,7 @@ import styles from '../../App.module.css';
 import cn from 'classnames';
 import Loader from '../Loader/Loader';
 
-const NetStations = ({currentNetStations, changeStat}) => {
+const NetStations = ({currentNetStations, setStationLike, setStationDislike}) => {
 	if (currentNetStations) {
 		return (
 			<>
@@ -14,7 +14,7 @@ const NetStations = ({currentNetStations, changeStat}) => {
 								[styles.cardLike]: station.liked,
 							})}
 							key={`${station.id}_${index}`}
-							onClick={() => changeStat(index)}
+							onClick={() => station.liked ? setStationDislike(index) : setStationLike(index) }
 						>
 							{station.name}, доступно велосипедов: {station.free_bikes}
 						</div>

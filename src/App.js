@@ -9,9 +9,10 @@ const App = (props) => {
     currentNetId,
     currentNetStations,    
     selectNet,
-    changeStat,
     initApp,
     displayNet,
+    setStationLike,
+    setStationDislike,
   } = props;
 
   const [initislized, setInitialized] = useState(false);
@@ -37,7 +38,7 @@ const App = (props) => {
             <Nets nets={nets} selectNet={selectNet} />
           </div>
           <div className={styles.col}>
-            <NetStations currentNetStations={currentNetStations} changeStat={changeStat} />
+            <NetStations currentNetStations={currentNetStations} setStationLike={setStationLike} setStationDislike={setStationDislike} />
           </div>
         </div>
       

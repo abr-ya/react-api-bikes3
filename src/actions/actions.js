@@ -19,11 +19,15 @@ export const selectNet = (id) => ({
     payload: id,
 });
 
-export const changeStat = (index) => ({
-    type: actionTypes.CHANGE_STATION,
+export const setStationLike = (index) => ({
+    type: actionTypes.SET_STATION_LIKE,
     index,
 });
 
+export const setStationDislike = (index) => ({
+    type: actionTypes.SET_STATION_DISLIKE,
+    index,
+});
 
 // sagas actions
 export const initApp = () => ({

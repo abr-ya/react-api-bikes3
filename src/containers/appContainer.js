@@ -14,9 +14,10 @@ const mapStateToProps = state => ({
 // добавляем функции actions в props компонента
 const mapDispatchToProps = {
   selectNet: actions.selectNet,
-  changeStat: actions.changeStat,
   initApp: actions.initApp,
   displayNet: actions.displayNet,
+  setStationLike: actions.setStationLike,
+  setStationDislike: actions.setStationDislike,
 }
 
 // связываем компонент с Redux Store
