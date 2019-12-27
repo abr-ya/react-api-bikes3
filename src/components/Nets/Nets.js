@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from '../../App.module.css';
+import Loader from '../Loader/Loader';
 
 const Nets = ({nets, selectNet}) => {
 
@@ -16,7 +17,7 @@ const Nets = ({nets, selectNet}) => {
 						{net.name} ({net.id})
 					</div>
 				))
-				: ("здесь будет лоадер...")
+				: (<Loader />)
 			}
 		</>		
 	)
