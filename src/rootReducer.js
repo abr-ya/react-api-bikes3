@@ -27,7 +27,7 @@ export default function rootReducer(state = initialState, action) {
                 ...state,
                 currentNetId: action.payload,
             }
-        case CHANGE_STATION:
+        case actionTypes.CHANGE_STATION:
             const stations = [...state.stations[state.currentNetId]];
             stations[action.index].liked = !stations[action.index].liked;
 
